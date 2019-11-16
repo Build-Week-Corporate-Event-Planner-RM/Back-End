@@ -16,6 +16,13 @@ exports.up = function(knex) {
   })
   .createTable('events', table => {
       table.increments();
+      table.integer('user_id')
+      .unsigned()
+      .notNullable()
+      .references('id')
+      .inTable('auth')
+      .onDelete('RESTRICT')
+      .onUpdate('CASCADE');
       table.string('name', 164)
       .notNullable();
       table.string('description', 500)
@@ -41,7 +48,7 @@ exports.up = function(knex) {
   })
   .createTable('vendors', table => {
       table.increments();
-      table.string('name;, 264')
+      table.string('name', 264)
       .notNullable()
       .unique();
   })
@@ -58,7 +65,7 @@ exports.up = function(knex) {
       .unsigned()
       .notNullable()
       .references('id')
-      .inTable('events')
+      .inTable('vendor')
       .onDelete('RESTRICT')
       .onUpdate('CASCADE');
   })
@@ -66,9 +73,9 @@ exports.up = function(knex) {
 
 exports.down = function(knex) {
   return knex.schema
-  .dropIfTableExists('events-vendors')
-  .dropIfTableExists('vendors')
-  .dropIfTableExists('todos')
-  .dropIfTableExists('events')
-  .dropIfTableExists('auth');
+  .dropTableIfExists('events-vendors')
+  .dropTableIfExists('vendors')
+  .dropTableIfExists('todos')
+  .dropTableIfExists('events')
+  .dropTableIfExists('auth');
 };
