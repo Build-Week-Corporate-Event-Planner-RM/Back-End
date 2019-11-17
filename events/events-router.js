@@ -87,7 +87,7 @@ router.get('/todos/:id', (req,res) => {
         })
   })
   
-  router.get("/todos/:id/event",  (req, res) => {
+  router.get("/:id/todos",  (req, res) => {
     const id = req.params.id;
     const all = {...req.body, event_id:id}
     Events.getTodosByEvent(id)
@@ -112,7 +112,7 @@ router.get('/todos/:id', (req,res) => {
       });
 });
 
-router.get("/vendors/:id/event",  (req, res) => {
+router.get("/:id/vendors",  (req, res) => {
     const id = req.params.id;
     const all = {...req.body, event_id:id}
     Events.getVendorsByEvent(id)
@@ -222,7 +222,10 @@ router.put('/:id', (req, res) => {
         if (!event) {
             res.status(404).json({message: "No event exists by that ID!"})
         } else {
-            res.status(201).json(event)
+            Events.getEventById(req.params.id)
+            .then(uEvent => {
+                res.status(201).json(uEvent)
+            })
         }
     })
     .catch(err => {
@@ -238,7 +241,10 @@ router.put('/vendors/:id', (req, res) => {
         if (!vendor) {
             res.status(404).json({message: "No vendor exists by that ID!"})
         } else {
-            res.status(201).json(vendor)
+            Events.getVendorById(req.params.id)
+            .then(uVendor => {
+                res.status(201).json(uVendor)
+            })
         }
     })
     .catch(err => {
@@ -254,7 +260,10 @@ router.put('/todos/:id', (req, res) => {
         if (!todo) {
             res.status(404).json({message: "No todo exists by that ID!"})
         } else {
-            res.status(201).json(todo)
+            Events.getTodoById(req.params.id)
+            .then(uTodo => {
+                res.status(201).json(uTodo)
+            })
         }
     })
     .catch(err => {
