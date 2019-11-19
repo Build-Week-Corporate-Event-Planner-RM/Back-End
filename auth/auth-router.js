@@ -15,7 +15,7 @@ router.post('/register', (req, res) => {
     Users.add(user)
         .then(userN => {
             const token = generateToken(userN)
-            res.status(200).json(token)
+            res.status(200).json({token: token})
         })
         .catch(error => {
             console.log(error)
@@ -47,6 +47,17 @@ router.post('/login', (req, res) => {
             res.status(500).json({message: `error logging user in!`})
         })
 });
+
+router.get('/:id', (req, res) => {
+    let id = req.params.id;
+
+    Users.findById(id)
+    .then(user => {
+        const username = user.username;
+        res.status(200).json({ username: username });
+    })
+    .catch(err => res.status(500).json({ message: 'User with specified ID does not exist.', error: error }));
+})
 
 function generateToken(user){
   const payload = {
