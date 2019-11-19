@@ -14,7 +14,7 @@ describe("events model", function(){
             console.log(todo)
             await addTodo({
                 event_id: 1,
-                name: "test vendor",
+                name: "test todo",
                 completed: 1,
             })
             const inserted = await db("todos")
