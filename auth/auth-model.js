@@ -19,9 +19,17 @@ function findById(id) {
     .first();
 }
 
+function remove(id) {
+  return db('auth')
+  .where({ id })
+  .first()
+  .del();
+}
+
 module.exports = {
     add,
     find,
     findBy,
     findById,
+    remove
   };
