@@ -8,6 +8,14 @@ function findBy(filter) {
   return db('auth').where(filter);
 }
 
+function findByUsername(username) {
+  return db('auth')
+  .where({
+    username: username
+  })
+  .select('id', 'username', 'email', 'company', 'role');
+}
+
 async function add(user) {
   const [id] = await db('auth').insert(user);
   return findById(id);
@@ -30,6 +38,7 @@ module.exports = {
     add,
     find,
     findBy,
+    findByUsername,
     findById,
     remove
   };
