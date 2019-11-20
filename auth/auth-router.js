@@ -17,7 +17,6 @@ router.post("/register", (req, res) => {
 
       Users.findByUsername(userN.username)
       .then(newUser => {
-        console.log(newUser)
         res.status(200).json({ message: 'User registered.', id: newUser[0].id, token: token });
       })
       .catch(err => res.status(500).json('Unable to retrieve new user.'))
