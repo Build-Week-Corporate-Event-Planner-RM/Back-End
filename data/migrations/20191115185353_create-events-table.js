@@ -65,7 +65,7 @@ exports.up = function(knex) {
       .unsigned()
       .notNullable()
       .references('id')
-      .inTable('vendor')
+      .inTable('vendors')
       .onDelete('RESTRICT')
       .onUpdate('CASCADE');
   })
